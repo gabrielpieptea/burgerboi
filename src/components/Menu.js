@@ -1,69 +1,37 @@
 import React, { useState, useEffect } from 'react'
-import { addCola, addFanta, addPepsi } from '../store/actions/addToOrder'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   addCheese,
-  addKetchup,
-  addMayo,
   addOnions,
   addPickles,
   addSalad,
   addBacon,
-  addSpicy,
-  addMeat,
-  addTomatoes,
-} from '../store/actions/burger'
-import { connect } from 'react-redux'
-const Menu = ({
-  addPepsi,
-  addCola,
-  addFanta,
-  ordered,
-  addCheese,
-  addKetchup,
-  addMayo,
-  addOnions,
-  addPickles,
-  addSalad,
-  addBacon,
-  addSpicy,
   addTomatoes,
   addMeat,
-  burger: {
-    cheese,
-    ketchup,
-    mayo,
-    onions,
-    pickles,
-    salad,
-    bacon,
-    spicy,
-    tomatoes,
-    meat,
-  },
-}) => {
+} from '../features/burger'
+
+const Menu = () => {
   const [content, setContent] = useState([])
   const [buttonContent, setButtonContent] = useState([])
+  const dispatch = useDispatch()
+  const { cheese, onions, pickles, salad, bacon, tomatoes, meat } = useSelector(
+    (state) => state.burger
+  )
   const removeLast = () => {
     content.splice(-1, 1)
     setContent([...content])
   }
 
-  const removeElement = () => {
-    // buttonContent.forEach((element) => console.log(element))
-    console.log(content)
-  }
-  // useEffect(() => {
-  //   if (content.length !== 0)
-  //     setButtonContent([
-  //       ...buttonContent,
-  //       <button onClick={() => removeElement()}>Remove</button>,
-  //     ])
-  // }, [content])
-
   const addIngredient = (value) => {
     switch (value) {
       case 'cheese':
-        setContent([...content, <div className='Cheese'></div>])
+        setContent([
+          ...content,
+          <>
+            <div className='Cheese'></div>
+            <div className='Cheese'></div>
+          </>,
+        ])
 
         break
       case 'salad':
@@ -100,18 +68,19 @@ const Menu = ({
       <div className='menuWrapper'>
         <div className='drinks'>
           <div className='choiceContainer'>
-            <button onClick={addCola}>Cola</button>
+            {/* <button onClick={addCola}>Cola</button>
             <button onClick={addFanta}>Fanta</button>
-            <button onClick={addPepsi}>Pepsi</button>
+            <button onClick={addPepsi}>Pepsi</button> */}
           </div>
-          <div className='currentChoice'>{ordered}</div>
+          {/* <div className='currentChoice'>{ordered}</div> */}
         </div>
 
         <div className='burger'>
           <div className='burgerConfig'>
             <button
               onClick={() => {
-                addCheese()
+                dispatch(addCheese(3))
+
                 addIngredient('cheese')
               }}
             >
@@ -119,7 +88,7 @@ const Menu = ({
             </button>
             <button
               onClick={() => {
-                addOnions()
+                dispatch(addOnions())
                 addIngredient('onions')
               }}
             >
@@ -127,7 +96,8 @@ const Menu = ({
             </button>
             <button
               onClick={() => {
-                addPickles()
+                dispatch(addPickles())
+
                 addIngredient('pickles')
               }}
             >
@@ -136,7 +106,7 @@ const Menu = ({
 
             <button
               onClick={() => {
-                addSalad()
+                dispatch(addSalad())
                 addIngredient('salad')
               }}
             >
@@ -154,7 +124,7 @@ const Menu = ({
 
             <button
               onClick={() => {
-                addBacon()
+                dispatch(addBacon())
                 addIngredient('bacon')
               }}
             >
@@ -162,7 +132,7 @@ const Menu = ({
             </button>
             <button
               onClick={() => {
-                addMeat()
+                dispatch(addMeat())
                 addIngredient('meat')
               }}
             >
@@ -186,24 +156,5 @@ const Menu = ({
     </div>
   )
 }
-const mapStateToProps = (state) => ({
-  ordered: state.addToOrder.ordered,
-  burger: state.burger,
-})
 
-const mapDispatchToProps = {
-  addCola,
-  addFanta,
-  addPepsi,
-  addCheese,
-  addKetchup,
-  addMayo,
-  addOnions,
-  addPickles,
-  addSalad,
-  addBacon,
-  addSpicy,
-  addTomatoes,
-  addMeat,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default Menu
