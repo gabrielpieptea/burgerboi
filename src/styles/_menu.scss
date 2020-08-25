@@ -1,0 +1,35 @@
+.menuWrapper {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 10px 20px;
+}
+
+.drinks {
+  border: 1px solid white;
+}
+
+.burger {
+  border: 1px solid white;
+}
+
+.burgerConfig {
+  display: grid;
+  grid-gap: 7px;
+  width: 90%;
+  grid-template-columns: repeat(3, 30%);
+  padding: 6%;
+
+  & button {
+    border-radius: 8px;
+  }
+}
+
+.burgerWrapper {
+  display: flex;
+}
+
+.deleteMenu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 65px;
+}
